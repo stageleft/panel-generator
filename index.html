@@ -21,31 +21,46 @@
             <legend>パラメータ入力</legend>
             <fieldset>
                 <legend>画像サイズ[px]</legend>
-            <label for="width">画像幅：</label>
+            <label for="width">幅(0..1920)：</label>
             <input name="width" id="width" type="number" value="1920" min="320" max="1920"
                 onchange="document.getElementById('leftside_margin').max=document.getElementById('width').value;
                           document.getElementById('rightside_margin').max=document.getElementById('width').value">
-            <label for="height">画像高さ：</label>
+            <br>
+            <label for="height">高さ(0..1920)：</label>
             <input name="height" id="height" type="number" value="1024" min="320" max="1920"
                 onchange="document.getElementById('upside_margin').max=document.getElementById('height').value;
                           document.getElementById('downside_margin').max=document.getElementById('height').value">
             </fieldset>
             <fieldset>
-                <legend>表の形式</legend>
+                <legend>表の列形式</legend>
                 <label for="x_count">列数：</label>
                 <input name="x_count" id="x_count" type="number" value="4" min="1" max="16">
+                <br>
+                <label for="x_title">列タイトル空白(0..1920)：</label>
+                <input name="x_title" id="x_title" type="number" value="120" min="0" max="1920">
+                [px] タイトル不要な場合は0を入力
+            </fieldset>
+            <fieldset>
+                <legend>表の行形式</legend>
                 <label for="y_count">行数：</label>
                 <input name="y_count" id="y_count" type="number" value="2" min="1" max="16">
+                <br>
+                <label for="y_title">行タイトル空白(0..1920)：</label>
+                <input name="y_title" id="y_title" type="number" value="60" min="0" max="1920">
+                [px] タイトル不要な場合は0を入力
             </fieldset>
             <fieldset>
                 <legend>周囲の空白[px]</legend>
-                <label for="upside_margin">上：</label>
+                <label for="upside_margin">上(0..1920)：</label>
                 <input name="upside_margin" id="upside_margin" type="number" value="60" min="0" max="1920">
-                <label for="downside_margin">下：</label>
+                <br>
+                <label for="downside_margin">下(0..1920)：</label>
                 <input name="downside_margin" id="downside_margin" type="number" value="16" min="320" max="1920">
-                <label for="leftside_margin">左：</label>
+                <br>
+                <label for="leftside_margin">左(0..1920)：</label>
                 <input name="leftside_margin" id="leftside_margin" type="number" value="24" min="0" max="1920">
-                <label for="rightside_margin">右：</label>
+                <br>
+                <label for="rightside_margin">右(0..1920)：</label>
                 <input name="rightside_margin" id="rightside_margin" type="number" value="8" min="320" max="1920">
             </fieldset>
         </fieldset>
@@ -58,10 +73,11 @@
         pg.setCanvas(document.getElementById('canvas'));
         pg.setCanvasSizeElement(document.getElementById('width'), document.getElementById('height'));
         pg.setCanvasDivisionElement(document.getElementById('x_count'), document.getElementById('y_count'));
-        pg.setCanvasTitleAreaElement(document.getElementById('upside_margin'),
-                                     document.getElementById('downside_margin'),
-                                     document.getElementById('leftside_margin'),
-                                     document.getElementById('rightside_margin'));
+        pg.setCanvasTitleAreaElement(document.getElementById('x_title'), document.getElementById('y_title'));
+        pg.setCanvasMarginElement(document.getElementById('upside_margin'),
+                                  document.getElementById('downside_margin'),
+                                  document.getElementById('leftside_margin'),
+                                  document.getElementById('rightside_margin'));
     </script>
 </body>
 </html>
