@@ -2,7 +2,7 @@
 
 <html lang="ja">
 <head>
-    <title>Panel Generator</title>
+    <title>Panel Generator - 表画像作成ツール</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -10,43 +10,49 @@
     <script>
         const pg = new PanelGenerator();
     </script>
+    <h1>Panel Generator - 表画像作成ツール</h1>
     <div id="help">
-        <h1>Panel Generator の使い方 How to use</h1>
-        <p>入力パラメータを入れます。</p>
+        <p>Panel Generator の使い方 How to use</p>
+        <p>パラメータを入力し、「表画像作成」ボタンをクリックします。</p>
         <p>表示された画像を右クリックでダウンロードします。</p>
     </div>
     <div id="input">
-        <label for="width">画像幅：</label>
-        <input name="width" id="width" type="number" value="1024" min="320" max="1024" 
-               onchange="pg.generate();
-                         document.getElementById('leftside_margin').max=document.getElementById('width').value;
-                         document.getElementById('rightside_margin').max=document.getElementById('width').value">,
-        <label for="height">画像高さ：</label>
-        <input name="height" id="height" type="number" value="1920" min="320" max="1920"
-               onchange="pg.generate();
-                         document.getElementById('upside_margin').max=document.getElementById('height').value;
-                         document.getElementById('downside_margin').max=document.getElementById('height').value">,
-        <label for="x_count">列数：</label>
-        <input name="x_count" id="x_count" type="number" value="2" min="1" max="16"
-               onchange="pg.generate()">
-        <label for="y_count">行数：</label>
-        <input name="y_count" id="y_count" type="number" value="4" min="1" max="16"
-                onchange="pg.generate()">
-        <label for="upside_margin">画像上空白領域：</label>
-        <input name="upside_margin" id="upside_margin" type="number" value="60" min="0" max="1920"
-               onchange="pg.generate()">
-        <label for="downside_margin">画像下空白領域：</label>
-        <input name="downside_margin" id="downside_margin" type="number" value="16" min="320" max="1920"
-               onchange="pg.generate()">
-        <label for="leftside_margin">画像左空白領域：</label>
-        <input name="leftside_margin" id="leftside_margin" type="number" value="24" min="0" max="1024"
-                onchange="pg.generate()">
-        <label for="rightside_margin">画像右空白領域：</label>
-        <input name="rightside_margin" id="rightside_margin" type="number" value="8" min="320" max="1024"
-                onchange="pg.generate()">
+        <fieldset>
+            <legend>パラメータ入力</legend>
+            <fieldset>
+                <legend>画像サイズ[px]</legend>
+            <label for="width">画像幅：</label>
+            <input name="width" id="width" type="number" value="1920" min="320" max="1920"
+                onchange="document.getElementById('leftside_margin').max=document.getElementById('width').value;
+                          document.getElementById('rightside_margin').max=document.getElementById('width').value">
+            <label for="height">画像高さ：</label>
+            <input name="height" id="height" type="number" value="1024" min="320" max="1920"
+                onchange="document.getElementById('upside_margin').max=document.getElementById('height').value;
+                          document.getElementById('downside_margin').max=document.getElementById('height').value">
+            </fieldset>
+            <fieldset>
+                <legend>表の形式</legend>
+                <label for="x_count">列数：</label>
+                <input name="x_count" id="x_count" type="number" value="4" min="1" max="16">
+                <label for="y_count">行数：</label>
+                <input name="y_count" id="y_count" type="number" value="2" min="1" max="16">
+            </fieldset>
+            <fieldset>
+                <legend>周囲の空白[px]</legend>
+                <label for="upside_margin">上：</label>
+                <input name="upside_margin" id="upside_margin" type="number" value="60" min="0" max="1920">
+                <label for="downside_margin">下：</label>
+                <input name="downside_margin" id="downside_margin" type="number" value="16" min="320" max="1920">
+                <label for="leftside_margin">左：</label>
+                <input name="leftside_margin" id="leftside_margin" type="number" value="24" min="0" max="1920">
+                <label for="rightside_margin">右：</label>
+                <input name="rightside_margin" id="rightside_margin" type="number" value="8" min="320" max="1920">
+            </fieldset>
+        </fieldset>
+        <button onclick="pg.generate()">表画像作成</button>
     </div>
     <div id="output">
-        <canvas id="canvas" width="1024" height="1920"></canvas>
+        <canvas id="canvas" width="0" height="0"></canvas>
     </div>
     <script>
         pg.setCanvas(document.getElementById('canvas'));
@@ -56,7 +62,6 @@
                                      document.getElementById('downside_margin'),
                                      document.getElementById('leftside_margin'),
                                      document.getElementById('rightside_margin'));
-        pg.generate();
     </script>
 </body>
 </html>
