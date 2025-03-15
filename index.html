@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="ja">
+<head>
+    <title>Panel Generator</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <script src="./js/index.js"></script>
+    <script>
+        const pg = new PanelGenerator();
+    </script>
+    <div id="help">
+        <h1>Panel Generator の使い方 How to use</h1>
+        <p>入力パラメータを入れます。</p>
+        <p>表示された画像を右クリックでダウンロードします。</p>
+    </div>
+    <div id="input">
+        <label for="width">画像幅：</label>
+        <input name="width" id="width" type="number" value="1024" min="320" max="1024" 
+               onchange="pg.generate();
+                         document.getElementById('leftside_margin').max=document.getElementById('width').value;
+                         document.getElementById('rightside_margin').max=document.getElementById('width').value">,
+        <label for="height">画像高さ：</label>
+        <input name="height" id="height" type="number" value="1920" min="320" max="1920"
+               onchange="pg.generate();
+                         document.getElementById('upside_margin').max=document.getElementById('height').value;
+                         document.getElementById('downside_margin').max=document.getElementById('height').value">,
+        <label for="x_count">列数：</label>
+        <input name="x_count" id="x_count" type="number" value="2" min="1" max="16"
+               onchange="pg.generate()">
+        <label for="y_count">行数：</label>
+        <input name="y_count" id="y_count" type="number" value="4" min="1" max="16"
+                onchange="pg.generate()">
+        <label for="upside_margin">画像上空白領域：</label>
+        <input name="upside_margin" id="upside_margin" type="number" value="60" min="0" max="1920"
+               onchange="pg.generate()">
+        <label for="downside_margin">画像下空白領域：</label>
+        <input name="downside_margin" id="downside_margin" type="number" value="16" min="320" max="1920"
+               onchange="pg.generate()">
+        <label for="leftside_margin">画像左空白領域：</label>
+        <input name="leftside_margin" id="leftside_margin" type="number" value="24" min="0" max="1024"
+                onchange="pg.generate()">
+        <label for="rightside_margin">画像右空白領域：</label>
+        <input name="rightside_margin" id="rightside_margin" type="number" value="8" min="320" max="1024"
+                onchange="pg.generate()">
+    </div>
+    <div id="output">
+        <canvas id="canvas" width="1024" height="1920"></canvas>
+    </div>
+    <script>
+        pg.setCanvas(document.getElementById('canvas'));
+        pg.setCanvasSizeElement(document.getElementById('width'), document.getElementById('height'));
+        pg.setCanvasDivisionElement(document.getElementById('x_count'), document.getElementById('y_count'));
+        pg.setCanvasTitleAreaElement(document.getElementById('upside_margin'),
+                                     document.getElementById('downside_margin'),
+                                     document.getElementById('leftside_margin'),
+                                     document.getElementById('rightside_margin'));
+        pg.generate();
+    </script>
+</body>
+</html>
