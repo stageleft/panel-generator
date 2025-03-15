@@ -20,12 +20,19 @@ class PanelGenerator {
         this.x_count_element = x_count_element;
         this.y_count_element = y_count_element;
     }
-    // upside_margin_element: input element which value is height of upside title area
-    // downside_margin_element: input element which value is height of downside title area
-    // leftside_margin_element: input element which value is height of leftside title area
-    // rightside_margin_element: input element which value is height of rightside title area
+    // x_title_element: input element which value is height of upside title area
+    // y_title_element: input element which value is width of leftside title area
     //     see. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input
-    setCanvasTitleAreaElement(upside_margin_element, downside_margin_element, leftside_margin_element, rightside_margin_element) {
+    setCanvasTitleAreaElement(x_title_element, y_title_element) {
+        this.x_title_element = x_title_element;
+        this.y_title_element = y_title_element;
+    }
+    // upside_margin_element: input element which value is height of upside margin area
+    // downside_margin_element: input element which value is height of downside margin area
+    // leftside_margin_element: input element which value is width of leftside margin area
+    // rightside_margin_element: input element which value is width of rightside margin area
+    //     see. https://developer.mozilla.org/ja/docs/Web/HTML/Element/input
+    setCanvasMarginElement(upside_margin_element, downside_margin_element, leftside_margin_element, rightside_margin_element) {
         this.upside_margin_element = upside_margin_element;
         this.downside_margin_element = downside_margin_element;
         this.leftside_margin_element = leftside_margin_element;
@@ -48,12 +55,14 @@ class PanelGenerator {
         const y_end = Math.min(y + line_width, this.canvas.height);
         ctx.fillRect(x_start, y_start, x_end - x_start, y_end - y_start);
     }
-    generate(width, height, x_count, y_count, upside_margin, downside_margin, leftside_margin, rightside_margin) {
+    generate(width, height, x_count, y_count, x_title, y_title, upside_margin, downside_margin, leftside_margin, rightside_margin) {
         // get value if param is null
         if (isNaN(width)) { width = Number(this.width_element.value); }
         if (isNaN(height)) { height = Number(this.height_element.value); }
         if (isNaN(x_count)) { x_count = Number(this.x_count_element.value); }
         if (isNaN(y_count)) { y_count = Number(this.y_count_element.value); }
+        if (isNaN(x_title)) { x_title = Number(this.x_title_element.value); }
+        if (isNaN(y_title)) { y_title = Number(this.y_title_element.value); }
         if (isNaN(upside_margin)) { upside_margin = Number(this.upside_margin_element.value); }
         if (isNaN(downside_margin)) { downside_margin = Number(this.downside_margin_element.value); }
         if (isNaN(leftside_margin)) { leftside_margin = Number(this.leftside_margin_element.value); }
@@ -67,15 +76,18 @@ class PanelGenerator {
         this.canvas.width = width;
         this.canvas.height = height;
         const ctx = this.canvas.getContext('2d'); // https://developer.mozilla.org/ja/docs/Web/API/HTMLCanvasElement/getContext
-        // draw horizontal line in panel
-        const w = width - (leftside_margin + rightside_margin);
+        // draw vertical line in panel
+        this.generate_vline(ctx, 'black', leftside_margin, upside_margin, height - downside_margin, half_line_width);
+        const w = width - (leftside_margin + rightside_margin + x_title);
         for (let i = 0; i < (x_count + 1); i++) {
-            const x = Math.trunc(w * i / x_count) + leftside_margin;
+            const x = Math.trunc(w * i / x_count) + leftside_margin + x_title;
             this.generate_vline(ctx, 'black', x, upside_margin, height - downside_margin, half_line_width);
         }
-        const h = height - (upside_margin + downside_margin);
+        // draw horizontal line in panel
+        this.generate_hline(ctx, 'black', leftside_margin, width - rightside_margin, upside_margin, half_line_width);
+        const h = height - (upside_margin + downside_margin + y_title);
         for (let i = 0; i < (y_count + 1); i++) {
-            const y = Math.trunc(h * i / y_count) + upside_margin;
+            const y = Math.trunc(h * i / y_count) + upside_margin + y_title;
             this.generate_hline(ctx, 'black', leftside_margin, width - rightside_margin, y, half_line_width);
         }
     }

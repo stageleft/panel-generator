@@ -31,11 +31,15 @@
                           document.getElementById('downside_margin').max=document.getElementById('height').value">
             </fieldset>
             <fieldset>
-                <legend>表の形式</legend>
+                <legend>表の形式（タイトル不要な場合は0を入力）</legend>
                 <label for="x_count">列数：</label>
                 <input name="x_count" id="x_count" type="number" value="4" min="1" max="16">
                 <label for="y_count">行数：</label>
                 <input name="y_count" id="y_count" type="number" value="2" min="1" max="16">
+                <label for="x_title">列タイトル空白[px]：</label>
+                <input name="x_title" id="x_title" type="number" value="0" min="0" max="1920">
+                <label for="y_title">行タイトル空白[px]：</label>
+                <input name="y_title" id="y_title" type="number" value="0" min="0" max="1920">
             </fieldset>
             <fieldset>
                 <legend>周囲の空白[px]</legend>
@@ -58,10 +62,11 @@
         pg.setCanvas(document.getElementById('canvas'));
         pg.setCanvasSizeElement(document.getElementById('width'), document.getElementById('height'));
         pg.setCanvasDivisionElement(document.getElementById('x_count'), document.getElementById('y_count'));
-        pg.setCanvasTitleAreaElement(document.getElementById('upside_margin'),
-                                     document.getElementById('downside_margin'),
-                                     document.getElementById('leftside_margin'),
-                                     document.getElementById('rightside_margin'));
+        pg.setCanvasTitleAreaElement(document.getElementById('x_title'), document.getElementById('y_title'));
+        pg.setCanvasMarginElement(document.getElementById('upside_margin'),
+                                  document.getElementById('downside_margin'),
+                                  document.getElementById('leftside_margin'),
+                                  document.getElementById('rightside_margin'));
     </script>
 </body>
 </html>
